@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import {Box} from '@mui/material';
-function Nav() {
+function Navbar() {
     return (
         <>
             <AppBar position="static">
@@ -46,4 +46,4 @@ function Nav() {
     )
 }
 
-export default Nav;
+export default Navbar;

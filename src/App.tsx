@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Nav from './components/estaticos/nav/Nav';
+import Navbar from './components/estaticos/navbar/Navbar';
 import Footer from './components/estaticos/footer/Footer';
 import Home from './paginas/home/Home';
 import {Grid} from '@material-ui/core';
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-    <Nav />
+    <Navbar />
     <Home />
     <Footer/>
     </>
