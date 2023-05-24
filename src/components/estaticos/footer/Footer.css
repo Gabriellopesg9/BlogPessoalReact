@@ -1,15 +1,15 @@
 .box1{
     
         
-        background:#20B2AA;
-        height: 120px ;
+        background:#03e0e7 !important;
+        height: 100px ;
 
 
 
 }
 .redes{
         font-Size: 60px;
-         color: white;
+         color: rgb(3, 3, 3);
 
 
 
@@ -22,11 +22,25 @@
 
    background:#000000; 
    height:60px;
+   color:azure !important;
 }
 .textos{
-    color: white;
+    color: rgb(8, 8, 8) ;
 
 
 
 
+}
+.textos2{
+        color: white !important;
+        font-size: none ;
+
+
+
+}
+.subtitle2{
+
+
+
+        color: white !important;
 }

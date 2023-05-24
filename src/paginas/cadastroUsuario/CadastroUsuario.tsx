@@ -55,7 +55,7 @@ function CadastroUsuario() {
     async function onSubmit(e: ChangeEvent<HTMLFormElement>){
         e.preventDefault()
         if(confirmarSenha === user.senha){
-            cadastroUsuario(`/usuario/cadastrar`,user, setUserResult)
+            cadastroUsuario(`/usuarios/cadastrar`,user, setUserResult)
             alert('Usuario cadastrado com sucesso')
 
 
@@ -84,6 +84,7 @@ function CadastroUsuario() {
                     <form onSubmit={onSubmit}>
                         <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' style={{ fontWeight: 'bold' }} >Cadastrar</Typography>
                         <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>)=> updatedModel(e)}id='nome' label='Nome' variant='outlined' name='nome' margin='normal' fullWidth />
+                        <TextField value={user.foto} onChange={(e: ChangeEvent<HTMLInputElement>)=> updatedModel(e)}id='foto' label='foto' variant='outlined' name='foto' margin='normal' fullWidth />
                         <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>)=> updatedModel(e)} id='usuario' label='Usuário' variant='outlined' name='usuario' margin='normal' fullWidth />
                         <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>)=> updatedModel(e)}id='senha' label='Senha' variant='outlined' name='senha' margin='normal' fullWidth type='password' />
                         <TextField value={confirmarSenha} onChange ={(e: ChangeEvent<HTMLInputElement>)=> confirmarSenhaHandle(e)}id='confirmarSenha' label='Confirmar Senha' variant='outlined' name='Confirmar senha' margin='normal' fullWidth type='password' />

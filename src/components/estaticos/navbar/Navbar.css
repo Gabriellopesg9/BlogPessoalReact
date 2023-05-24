@@ -1,7 +1,10 @@
-h5{
- color: black;
 
-
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+  
+  
+h5,h6{
+ color: black !important;
+ font-family: 'Pacifico', cursive !important;
 
 }
 .cursor{
@@ -14,6 +17,13 @@ h5{
 }
 .text-decorator-none{
     text-decoration: none;
-
+   
 
 }
+.bar{
+
+
+    background:#03e0e7 !important;
+    
+}
+

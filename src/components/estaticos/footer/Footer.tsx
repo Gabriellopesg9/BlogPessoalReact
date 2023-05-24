@@ -29,13 +29,9 @@ function Footer() {
                     </Box>
                     <Box className="box2">
                         <Box paddingTop={1}>
-                            <Typography variant="subtitle2" align="center" gutterBottom style={{ color: "white" }} >© 2023 Copyright:</Typography>
+                            <Typography variant="subtitle2" className="textos2" align="center" gutterBottom style={{ color: "white" }} >© 2023 Copyright  Gabriel Lopes</Typography>
                         </Box>
-                        <Box>
-                            <a target="_blank" href="Desenvolvido por Gabriel Lopes">
-                                <Typography variant="subtitle2" className="textos" align="center">Desenvolvido por Gabriel Lopes</Typography>
-                            </a>
-                        </Box>
+                        
                     </Box>
                 </Grid>
             </Grid>
