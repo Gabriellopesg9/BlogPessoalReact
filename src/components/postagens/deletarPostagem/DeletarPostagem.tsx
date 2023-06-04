@@ -5,18 +5,31 @@ import './DeletarPostagem.css';
 import Postagem from '../../../models/Postagem';
 import { buscaId, deleteId } from '../../../service/Service';
 import { useNavigate, useParams } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
+import { useSelector } from 'react-redux';
+import { UserState } from '../../../store/token/Reducer';
+import { toast } from 'react-toastify';
 
 
 function DeletarPostagem() {
     let history =useNavigate();
     const {id} = useParams<{id: string }>(); 
-    const [token,setToken] = useLocalStorage('token')
+    const token = useSelector<UserState, UserState["tokens"]>(
+      (state) => state.tokens
+    )
     const [postagem,setPostagem] =useState<Postagem>()
     useEffect(()=>{
     
     if(token===''){
-        alert("Você precisa estar logado")
+      toast.error('Você precisa estar logado!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'colored',
+        progress: undefined,
+      });
         history("/login")
 
 
@@ -30,27 +43,38 @@ function DeletarPostagem() {
 
 
     },[id])
+
+
     async function findById(id:string){
         buscaId(`/postagens/${id}`, setPostagem,{
             headers: {
-                'authoziation' : token
+                'Authorization' : token
             }
         })
 
     }
    
-   function sim(){
+    function sim(){
         history('/postagens')
         deleteId(`postagens/${id}`,{
             headers: {
 
-                'Authozation': token
+                'Authorization': token
             }
             
 
 
 
-        });alert('Postagem deletado com sucesso');
+        }); toast.success('Postagem deletada com sucesso!', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: 'colored',
+          progress: undefined,
+        });
         
    }
   function nao(){

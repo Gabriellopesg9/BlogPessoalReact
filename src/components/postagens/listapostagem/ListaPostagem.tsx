@@ -1,91 +1,111 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Box, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
-import Postagem from '../../../models/Postagem';
-import { busca } from '../../../service/Service'
-import useLocalStorage from 'react-use-localstorage'
-import { useNavigate } from 'react-router-dom';
+import { Button, Card, CardActions, CardContent, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { busca } from '../../../service/Service';
 
-function ListaPostagem() {
-    const [postagens, setPostagens] = useState<Postagem[]>([])
-    const [token, setToken] = useLocalStorage('token');
-    let history = useNavigate();
+import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
+import { UserState } from '../../../store/token/Reducer';
+import './ListaPostagem.css';
 
-    useEffect(() => {
-        if (token === ' ') {
-            alert("Você precisa estar logado")
-            history("/login")
-        }
+function Listapostagem() {
+  
+  let navigate = useNavigate();
 
-    }, [token])
+  const [posts, setPosts] = useState<any[]>([]);
 
+  const dispatch = useDispatch()
 
-    async function getPostagem() {
-        await busca("/postagens", setPostagens, {
-            headers: {
+  const token = useSelector<UserState, UserState["tokens"]>(
+    (state) => state.tokens
+  )
 
-
-                'Authorization': token
-            }
-
-
-        })
-
-
-
-
+  useEffect(() => {
+    if (token === '') {
+      toast.error('Usuário não autenticado!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'colored',
+        progress: undefined,
+      });
+      navigate('/login');
     }
+  }, [token]);
 
+  async function getpost() {
+    try {
+      await busca('/postagens', setPosts, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
+      }
+    }
+  }
 
-    useEffect(() => { getPostagem() }, [postagens.length])
-    return (
-        <> {
-            postagens.map(postagem => (
-                <Box m={4}>
-                    <Card variant="outlined">
-                        <CardContent>
+  useEffect(() => {
+    getpost();
+  }, [posts.length]);
+  
+  return (
+    <>
+      {posts.length === 0 ? (<div className="spinner"></div>) : (
+        posts.map((post) => (
+          <Box marginX={20} m={2} className="boxPost">
+            <Card >
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                  Postagens
+                </Typography>
+                <Typography variant="h5" component="h2">
+                  {post.titulo}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {post.texto}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {post.tema?.descricao}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  Postado por: {post.usuario?.nome}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  Data: {Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'medium' }).format(new Date(post.data))}
+                </Typography>
 
-                            <Typography color="textSecondary" gutterBottom>
-                                Postagem
-                            </Typography>
-                            <Typography variant="h5" component="h2">
-                                {postagem.titulo}
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                                {postagem.texto}
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                                {postagem.tema?.descricao}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Box display="flex" justifyContent="center" mb={1.5}>
+              </CardContent>
+              <CardActions>
+                <Box display="flex" justifyContent="center" mb={1.5}>
 
-                                <Link to={`/formularioPostagem/${postagem.id}`} className="text-decorator-none">
-                                    <Box mx={1}>
-                                        <Button variant="contained" className="marginLeft" size='small' color='primary'>
-                                            atualizar
-                                        </Button>
-                                    </Box>
-
-                                </Link>
-                                <Link to={`/deletarPostagem/${postagem.id}`} className="text-decorator-nome">
-                                    <Box >
-                                        <Button variant='contained' size='small' color="secondary">
-                                            deletar
-                                        </Button>
-                                    </Box>
-
-                                </Link>
-
-                            </Box>
-                        </CardActions>
-
-                    </Card>
-                </Box>))
-
-        }
-        </>
-    )
+                  <Link to={`/formularioPostagem/${post.id}`} className="text-decorator-none" >
+                    <Box mx={1}>
+                      <Button variant="contained" className="marginLeft" size='small' color="primary" >
+                        atualizar
+                      </Button>
+                    </Box>
+                  </Link>
+                  <Link to={`/deletarPostagem/${post.id}`} className="text-decorator-none">
+                    <Box mx={1}>
+                      <Button variant="contained" size='small' color="secondary">
+                        deletar
+                      </Button>
+                    </Box>
+                  </Link>
+                </Box>
+              </CardActions>
+            </Card>
+          </Box>
+        ))
+      )}
+    </>
+  );
 }
-export default ListaPostagem;
+
+export default Listapostagem;

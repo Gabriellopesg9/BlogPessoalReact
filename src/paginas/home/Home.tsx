@@ -3,18 +3,30 @@ import { Grid,Box ,Typography} from '@material-ui/core'
 import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem'
 import imagem from '../../assets/matematica.png'
 import './Home.css'
-import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem'
-import useLocalStorage from 'react-use-localstorage'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { UserState } from '../../store/token/Reducer'
+import { toast } from 'react-toastify';
 
 
 function Home() {
   let history = useNavigate();
-  const [token,setToken]= useLocalStorage('token');
+  const token = useSelector<UserState, UserState["tokens"]>(
+    (state) => state.tokens
+  )
    
   useEffect(()=>{
     if(token == ''){
-      alert ( "você precisa estar logado")
+      toast.error('Você precisa estar logado!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'colored',
+        progress: undefined,
+      });
       history("/login")
     }
   },[token])
@@ -38,7 +50,7 @@ function Home() {
 
         </Grid>
         <Grid>
-          <ModalPostagem/>
+          
 
 
         </Grid>

@@ -3,8 +3,8 @@
   
   
 h5,h6{
- color: black !important;
- font-family: 'Pacifico', cursive !important;
+ color: #0dcbe6 !important;
+ 
 
 }
 .cursor{
@@ -23,7 +23,7 @@ h5,h6{
 .bar{
 
 
-    background:#03e0e7 !important;
+    background:  #05063b !important;
     
 }
 
