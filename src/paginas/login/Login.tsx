@@ -101,7 +101,7 @@ function Login(){
             
             <Grid container direction='row' justifyContent="center"  spacing={6}>
                 <Grid item  alignItems='center'style={{ background: '#05063b'}} xs={6}>
-                <Box paddingX={20}>
+                <Box>
                    
 
                 <img  src={blog} alt="Homen-Vitruviano" width="500px" height="500px"/>
